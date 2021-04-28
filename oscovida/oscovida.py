@@ -769,7 +769,7 @@ def plot_incidence_rate(ax, cases: pd.Series, country: str,
         incidence = (cases.diff().dropna().rolling(7).sum()/habitants*100000)
         norm_title = "\n(per 100K people)"
     else:
-        incidence = (cases.diff().dropna().rolling(7).sum())
+        incidence = (cases.diff().dropna().rolling(7, closed='left').sum())
         norm_title = ''
 
     # convert dates to numbers first
