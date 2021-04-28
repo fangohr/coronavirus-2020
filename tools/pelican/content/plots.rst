@@ -13,7 +13,7 @@ Plot 1: 7-day incidence rate
 
 .. raw:: html
 
-    <img src="{attach}fig-uk-incidence.svg" alt="United Kingdom data">
+    <img src="{attach}Italy_1-1.svg" alt="United Kingdom data">
 
 -  Shows how many people have been confirmed to be infected
    during the last seven days prior to a date, per 100 thousand of inhabitants.
@@ -31,7 +31,7 @@ Plot 2: daily changes in cases
 
 .. raw:: html
 
-    <img src="{attach}fig-south-korea2.svg" alt="South Korea data">
+    <img src="{attach}Italy_1-2.svg" alt="South Korea data">
 
 -  Shows how many new confirmed cases are reported per day, shown as
    blue bars.
@@ -42,17 +42,17 @@ Plot 2: daily changes in cases
    after the weekend)
 -  We would like to see these numbers of daily changes decrease from day
    to day. The faster they go down the better. Ideally their reach 0.
--  For the data of South Korea, we can see that the peak of new
-   infections was around 1st March 2020, and following that the number
-   of new infections decreased to around 100 per day for the second half
-   of March, before the numbers started to decrease further.
+-  For the data of Italy, we can see that the peak of new
+   infections was around mid November 2020, and following that the number
+   of new infections decreased to around 150 per day for the second half
+   of February 2021, before the numbers started to decrease further.
 
 Plot 3: daily changes in deaths
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. raw:: html
 
-    <img src="{attach}fig-south-korea3.svg" alt="South Korea data">
+    <img src="{attach}Italy_1-3.svg" alt="South Korea data">
 
 
 -  Red bars shows how many new deaths were reported for each day.
@@ -67,7 +67,7 @@ Plot 4: R & growth factor based on cases
 
 .. raw:: html
 
-    <img src="{attach}fig-south-korea4.svg" alt="South Korea data">
+    <img src="{attach}Italy_1-4.svg" alt="South Korea data">
 
 
 Reproduction number R
@@ -136,7 +136,7 @@ Plot 5: R & growth factor based on deaths
 
 .. raw:: html
 
-    <img src="{attach}fig-south-korea5.svg" alt="South Korea data">
+    <img src="{attach}Italy_1-5.svg" alt="South Korea data">
 
 Conventionally, the R number is computed on infections (here shown in plot 4 and
 referred to as "R based on cases"). Assuming a fixed mortality rate, we can also
@@ -166,7 +166,7 @@ Plot 6: Doubling times
 
 .. raw:: html
 
-    <img src="{attach}fig-south-korea6.svg" alt="South Korea data">
+    <img src="{attach}Italy_1-6.svg" alt="Italy data">
 
 -  This plot computes the doubling time of the cases (blue) and deaths
    (red), assuming that the growth of cases and deaths as shown in plot

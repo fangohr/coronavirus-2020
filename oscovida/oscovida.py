@@ -15,7 +15,8 @@ from typing import Tuple, Union
 # choose font - can be deactivated
 from matplotlib import rcParams
 from oscovida.data_sources import base_url, hungary_data, jhu_population_url, rki_data, rki_population_url
-from oscovida.plotting_helpers import align_twinx_ticks, cut_dates, has_twin, limit_to_smoothed, uncertain_tail
+from oscovida.plotting_helpers import align_twinx_ticks, cut_dates, has_twin, limit_to_smoothed, uncertain_tail, \
+    full_extent
 
 rcParams['font.family'] = 'sans-serif'
 rcParams['font.sans-serif'] = ['Tahoma', 'DejaVu Sans', 'Lucida Grande', 'Verdana']
@@ -1809,12 +1810,12 @@ def overview(country: str, region: str = None, subregion: str = None,
     else:
         _c, _d = data
         assert isinstance(_c.index[0], pd.Timestamp), f"The index of 'cases' is not of type `Timestamp`, " \
-                                                     f"try to use `index=pd.DatetimeIndex(dates)`"
+                                                      f"try to use `index=pd.DatetimeIndex(dates)`"
         assert isinstance(_d.index[0], pd.Timestamp), f"The index of 'deaths' is not of type `Timestamp`, " \
-                                                     f"try to use `index=pd.DatetimeIndex(dates)`"
+                                                      f"try to use `index=pd.DatetimeIndex(dates)`"
 
     region_label = get_region_label(country, region=region, subregion=subregion)
-    fig, axes = plt.subplots(6, 1, figsize=(10, 15), sharex=False)
+    fig, axes = plt.subplots(6, 1, figsize=(10, 15), sharex=False, constrained_layout=True)
     if dates and weeks == 0:
         c = cut_dates(_c, dates)
     elif dates and weeks:
@@ -1886,9 +1887,13 @@ def overview(country: str, region: str = None, subregion: str = None,
     # tight_layout gives warnings, for example for Heinsberg
     # fig.tight_layout(pad=1)
 
-    filename = os.path.join("figures", region_label.replace(" ", "-").replace(",", "-") + '.svg')
     if savefig:
-        fig.savefig(filename)
+        for j in range(len(axes)):
+            # get the size of the portion to save in inches
+            extent = full_extent(axes[j], fig)
+            filename = os.path.join("figures", region_label.replace(" ", "-").replace(",", "-") + f'_1-{j+1}.svg')
+            fig.savefig(filename, bbox_inches=extent)
+
     return axes, c, d
 
 
@@ -1937,8 +1942,11 @@ def compare_plot(country: str, region: str = None, subregion: str = None,
     fig2 = plt.gcf()
 
     if savefig:
-        filename = os.path.join("figures", region_label.replace(" ", "-").replace(",", "-") + '2.svg')
-        fig2.savefig(filename)
+        for j in range(len(axes_compare)):
+            # get the size of the portion to save in inches
+            extent = full_extent(axes_compare[j], fig2)
+            filename = os.path.join("figures", region_label.replace(" ", "-").replace(",", "-") + f'_2-{j + 1}.svg')
+            fig2.savefig(filename, bbox_inches=extent)
 
     return axes_compare, c, d
 

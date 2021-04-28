@@ -5,6 +5,8 @@ from functools import wraps
 from matplotlib import pyplot as plt
 from typing import Union
 
+from matplotlib.transforms import Bbox
+
 
 def cut_dates(df: Union[pd.DataFrame, pd.Series], dates: str) -> pd.DataFrame:
     """
@@ -99,3 +101,27 @@ def uncertain_tail(ax: plt.Axes, data: pd.Series, days: int = 3,
     tail = data.rolling(2 * days, center=True, win_type='gaussian', min_periods=3).mean(std=4)
     ax.plot(tail.index[-days - 1:], tail.values[-days - 1:],
             color=color, linestyle='dashed', linewidth=linewidth, alpha=alpha)
+
+
+def full_extent(ax, fig, num_subplots=6):
+    """Get the full extent of an axes, including axes labels, tick labels, and titles.
+
+    Return the size of bbox to save (in inches)
+    """
+    # For text objects, we need to draw the figure first, otherwise the extents are undefined.
+    ax.figure.canvas.draw()
+    items = ax.get_xticklabels() + ax.get_yticklabels()
+    items += [ax.xaxis.label, ax.yaxis.label]
+
+    items += [ax]
+
+    bbox = Bbox.union([item.get_window_extent() for item in items])
+    if has_twin(ax):
+        bbox.x1 += 75   # if there is a second y-axis, extend graph area to the right
+
+    # limit the maximum height of all subplots except from the first one
+    max_height = fig.get_size_inches()[1] * fig.dpi / num_subplots
+    if ax is not ax.figure.axes[0] and bbox.height > max_height * 1.01:
+        bbox.y1 = bbox.y0 + max_height * 1.01
+
+    return bbox.expanded(1., 1.).transformed(fig.dpi_scale_trans.inverted())
