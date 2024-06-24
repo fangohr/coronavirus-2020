@@ -15,7 +15,8 @@ from typing import Tuple, Union
 # choose font - can be deactivated
 from matplotlib import rcParams
 from oscovida.data_sources import base_url, hungary_data, jhu_population_url, rki_data, rki_population_url, rki_population_backup_file
-from oscovida.plotting_helpers import align_twinx_ticks, cut_dates, has_twin, limit_to_smoothed, uncertain_tail
+from oscovida.plotting_helpers import align_twinx_ticks, cut_dates, has_twin, limit_to_smoothed, uncertain_tail, \
+    full_extent
 
 rcParams['font.family'] = 'sans-serif'
 rcParams['font.sans-serif'] = ['Tahoma', 'DejaVu Sans', 'Lucida Grande', 'Verdana']
